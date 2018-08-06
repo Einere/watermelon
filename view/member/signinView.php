@@ -144,9 +144,6 @@
 		<p> <input type="submit" value="Sign In"></p>
 	</form>
     <!-- Trigger/Open The Modal -->
-    <p>
-        <button id="myBtn">Sign in</button>
-    </p>
     <!-- Back to List -->
     <a href='<?php echo base_url()."index.php/modules/member/MemberController/login"; ?>'>cancel</a>
     

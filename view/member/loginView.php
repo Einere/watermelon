@@ -12,7 +12,7 @@
         <input type="button" value="Login" style="width:50px"> <br>
         <input type="text" name="pw">    
     </form>  
-    <a href="joinView.php"><input type="button" value="join" style="width:50px"></a>
+    <a href="signinView.php"><input type="button" value="join" style="width:50px"></a>
 
 </body>  
 </html>  

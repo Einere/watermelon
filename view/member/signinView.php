@@ -129,7 +129,7 @@
 	</div>
 
 	<h1>Sign In</h1>
-	<form action=signCheck.php> 
+	<form action=signCheck.php method="post"> 
 		<p> ID : <input type="text" name="id"></p>
 		<p> Password : <input type="text" name="pw"></p>
 		<p> Confirm Password : <input type="text" name="confirmpw"></p>
@@ -141,11 +141,14 @@
 		<p> Phone number : <input type="text" name="phonenum1"> <input type="text" name="phonenum2" placeholder="추가입력(선택)"></p>
 		<p> Nick name : <input type="text" name="nickname"></p>
 		<p> Agree : <input type="text" name="agree"></p>
-		<p> <input type="submit" value="Sign In"></p>
+		<p> <input type="submit" name="signin_submit" value="Sign In"></p>
 	</form>
     <!-- Trigger/Open The Modal -->
+    <p>
+        <button id="myBtn">Sign in</button>
+    </p>
     <!-- Back to List -->
-    <a href='<?php echo base_url()."index.php/modules/member/MemberController/login"; ?>'>cancel</a>
+    <a href='loginView.php'><input type="button" value="cancel"></a>
     
 	<script>
 		// Get the modal

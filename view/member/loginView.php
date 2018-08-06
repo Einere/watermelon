@@ -7,10 +7,10 @@
 <body>  
     <h1>Login</h1>  
 
-    <form name="initView" action="loginCheck.php">
-        <input type="text" name="id">
-        <input type="button" value="Login" style="width:50px"> <br>
-        <input type="text" name="pw">    
+    <form name="initView" action="../../controller/member/loginController.php" method="post">
+        <p><input type="text" name="id"></p>
+        <p><input type="text" name="pw"></p>   
+        <p><input type="submit" value="Login" style="width:50px"> </p>
     </form>  
     <a href="signinView.php"><input type="button" value="join" style="width:50px"></a>
 

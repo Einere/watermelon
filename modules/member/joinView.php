@@ -136,70 +136,13 @@
 		<p> First name : <input type="text" name="firstname"></p>
 		<p> Last name : <input type="text" name="lasttname"></p>
 		<p> Birth Day : <input type="text" name="birth"></p>
-
-
-    
-    echo "<p>Last name : ";  
-    echo form_input('memlastname');  
-    echo "</p>";
-
-    echo "<p>Birth day : ";
-    $membirth = array(
-        'name'        => 'membirth',
-        'maxlength'   => '8'
-      );  
-    echo form_input($membirth);
-    echo "</p>";
-
-    
-
-    echo "<p>Address : ";  
-    echo form_input('memaddr');  
-    echo "</p>";
-    
-    echo "<p>Email : ";
-    echo form_input('eemail');
-    
-    $eemail2 = array(
-        'name'        => 'eemail2',
-        'placeholder' => '추가입력(선택)'
-      );
-    echo form_input($eemail2);
-    
-    echo "</p>";
-
-
-    echo "<p>Phone number : ";
-    $phphonenum = array(
-        'name'        => 'phphonenum',
-        'maxlength'   => '11'
-      );  
-    echo form_input($phphonenum);
-
-    $phphonenum2 = array(
-        'name'        => 'phphonenum2',
-        'placeholder' => '추가입력(선택)',
-        'maxlength'   => '11'
-      );
-    echo form_input($phphonenum2);  
-    echo "'-'없이 입력해주세요(ex.01011112222)";
-    echo "</p>";
-    
-
-    echo "<p>Nick name : ";  
-    echo form_input('memnickname');  
-    echo "</p>";
-
-    echo "<p>Agree : ";
-    echo form_checkbox('memagree', 'Agree', false);
-    echo "</p>";
-
-    echo "<p>";  
-    echo form_submit('signin_submit', 'Sign In');  
-    echo "</p>";  
-  
-    echo form_close();  
-    ?>
+		<p> Address : <input type="text" name="address"></p>
+		<p> Email : <input type="text" name="email1"> <input type="text" name="email2" placeholder="추가입력(선택)"></p>
+		<p> Phone number : <input type="text" name="phonenum1"> <input type="text" name="phonenum2" placeholder="추가입력(선택)"></p>
+		<p> Nick name : <input type="text" name="nickname"></p>
+		<p> Agree : <input type="text" name="agree"></p>
+		<p> <input type="submit" value="Sign In"></p>
+	</form>
     <!-- Trigger/Open The Modal -->
     <p>
         <button id="myBtn">Sign in</button>

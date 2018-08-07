@@ -9,10 +9,10 @@
 
     if($result->num_rows == 1) { // 로그인 성공
         session_start();
-        $_SESSION['id']=$_POST['id'];
-        Header("Location:../../view/board/listView.php");        
+        $_SESSION['username']=$_POST['id'];
+        Header("Location:../../controller/board/listController.php");        
     } else { // 로그인 실패 
-        
+                
         Header("Location:../../view/member/loginView.php");
     }
 ?>

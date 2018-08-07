@@ -129,7 +129,7 @@
 	</div>
 
 	<h1>Sign In</h1>
-	<form action=signCheck.php method="post"> 
+	<form action="signCheck.php" method="post"> 
 		<p> ID : <input type="text" name="id"></p>
 		<p> Password : <input type="text" name="pw"></p>
 		<p> Confirm Password : <input type="text" name="confirmpw"></p>

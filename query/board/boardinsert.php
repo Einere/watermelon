@@ -1,5 +1,4 @@
 <?php  
-    defined('BASEPATH') OR exit('No direct script access allowed');
 
 class boardinsert {    
     function post_insert($conn, $memseq, $title, $content, $file) {

@@ -1,3 +1,6 @@
+<?php 
+class detailView { 
+    public function detailShow($count, $nickname, $login, $post) {?>
 <!DOCTYPE html>
 <html>
 
@@ -110,3 +113,6 @@
 </body>
 
 </html>
+<?php 
+    }
+} ?>

@@ -9,10 +9,11 @@
 
     if($result->num_rows == 1) { // 로그인 성공
         session_start();
-        $_SESSION['username']=$_POST['id'];
-        Header("Location:../../controller/board/listController.php");        
+        $_SESSION['id']=$_POST['id'];
+        echo "<script>alert(\"로그인에 성공하였습니다.\");
+        location.replace('../../view/board/listView.php');</script>";
     } else { // 로그인 실패 
-                
-        Header("Location:../../view/member/loginView.php");
+        echo "<script>alert(\"로그인에 실패하였습니다.\");
+        location.replace('../../view/member/loginView.php');</script>";
     }
 ?>

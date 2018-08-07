@@ -129,26 +129,26 @@
 	</div>
 
 	<h1>Sign In</h1>
-	<form action="signCheck.php" method="post"> 
-		<p> ID : <input type="text" name="id"></p>
-		<p> Password : <input type="text" name="pw"></p>
-		<p> Confirm Password : <input type="text" name="confirmpw"></p>
-		<p> First name : <input type="text" name="firstname"></p>
-		<p> Last name : <input type="text" name="lasttname"></p>
-		<p> Birth Day : <input type="text" name="birth"></p>
-		<p> Address : <input type="text" name="address"></p>
-		<p> Email : <input type="text" name="email1"> <input type="text" name="email2" placeholder="추가입력(선택)"></p>
-		<p> Phone number : <input type="text" name="phonenum1"> <input type="text" name="phonenum2" placeholder="추가입력(선택)"></p>
-		<p> Nick name : <input type="text" name="nickname"></p>
-		<p> Agree : <input type="text" name="agree"></p>
+	<form action="../../controller/member/signinController.php" method='post'> 
+		<p> ID : <input type="text" name="memid"></p>
+		<p> Password : <input type="text" name="mempw"></p>
+		<p> Confirm Password : <input type="text" name="memcpw"></p>
+		<p> First name : <input type="text" name="memfirstname"></p>
+		<p> Last name : <input type="text" name="memlasttname"></p>
+		<p> Birth Day : <input type="text" name="membirth"></p>
+		<p> Address : <input type="text" name="memaddr"></p>
+		<p> Email : <input type="text" name="eemail1"> <input type="text" name="eemail2" placeholder="추가입력(선택)"></p>
+		<p> Phone number : <input type="text" name="phphonenum1"> <input type="text" name="phphonenum2" placeholder="추가입력(선택)"></p>
+		<p> Nick name : <input type="text" name="memnickname"></p>
+		<p> Agree : <input type="checkbox" name="memagree"></p>
 		<p> <input type="submit" name="signin_submit" value="Sign In"></p>
 	</form>
     <!-- Trigger/Open The Modal -->
-    <p>
+	<p>
         <button id="myBtn">Sign in</button>
     </p>
     <!-- Back to List -->
-    <a href='loginView.php'><input type="button" value="cancel"></a>
+    <a href="loginView.php" ><input type="button" value="cancle" style="width:50px"></a>
     
 	<script>
 		// Get the modal

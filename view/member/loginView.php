@@ -1,5 +1,6 @@
 <!DOCTYPE html>  
 <html lang="en">  
+
 <head>  
     <meta charset="utf-8">  
     <title>Login Page</title>  
@@ -13,6 +14,7 @@
         <p><input type="submit" value="Login" style="width:50px"> </p>
     </form>  
     <a href="signinView.php"><input type="button" value="join" style="width:50px"></a>
-
+    <script>
+    </script>
 </body>  
 </html>  

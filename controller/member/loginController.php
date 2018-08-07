@@ -1,7 +1,6 @@
 <?php 
     include '../../query/connect.php';
     include '../../query/member/memberselect.php';
-    // include '../../view/member/signinView.php';
     $dbConnect = new connect();
     $conn = $dbConnect->get_conn();
     
@@ -13,7 +12,6 @@
         $_SESSION['id']=$_POST['id'];
         echo "<script>alert(\"로그인에 성공하였습니다.\");
         location.replace('../../view/board/listView.php');</script>";
-        // Header("Location:../../view/board/listView.php");
     } else { // 로그인 실패 
         echo "<script>alert(\"로그인에 실패하였습니다.\");
         location.replace('../../view/member/loginView.php');</script>";

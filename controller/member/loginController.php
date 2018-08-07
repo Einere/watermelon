@@ -1,6 +1,7 @@
 <?php 
     include '../../query/connect.php';
     include '../../query/member/memberselect.php';
+    // include '../../view/member/signinView.php';
     $dbConnect = new connect();
     $conn = $dbConnect->get_conn();
     
@@ -10,9 +11,11 @@
     if($result->num_rows == 1) { // 로그인 성공
         session_start();
         $_SESSION['id']=$_POST['id'];
-        Header("Location:../../view/board/listView.php");        
+        echo "<script>alert(\"로그인에 성공하였습니다.\");
+        location.replace('../../view/board/listView.php');</script>";
+        // Header("Location:../../view/board/listView.php");
     } else { // 로그인 실패 
-        
-        Header("Location:../../view/member/loginView.php");
+        echo "<script>alert(\"로그인에 실패하였습니다.\");
+        location.replace('../../view/member/loginView.php');</script>";
     }
 ?>

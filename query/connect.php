@@ -1,5 +1,4 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
     class connect {
         function get_conn() {       
             $conn = mysqli_connect(

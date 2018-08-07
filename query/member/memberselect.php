@@ -1,5 +1,4 @@
 <?php  
-    defined('BASEPATH') OR exit('No direct script access allowed');
 
 class memberselect {   
     function select_confirm($conn, $id, $pw) {  

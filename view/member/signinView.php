@@ -137,8 +137,8 @@
 		<p> Last name : <input type="text" name="memlastname"></p>
 		<p> Birth Day : <input type="text" name="membirth" maxlength='8'></p>
 		<p> Address : <input type="text" name="memaddr"></p>
-		<p> Email : <input type="text" name="eemail1"> <input type="text" name="eemail2" placeholder="추가입력(선택)"></p>
-		<p> Phone number : <input type="text" name="phphonenum1" maxlength='11'> <input type="text" name="phphonenum2" placeholder="추가입력(선택)" maxlength='11'></p>
+		<p> Email : <input type="text" name="eemail"> <input type="text" name="eemail2" placeholder="추가입력(선택)"></p>
+		<p> Phone number : <input type="text" name="phphonenum" maxlength='11'> <input type="text" name="phphonenum2" placeholder="추가입력(선택)" maxlength='11'></p>
 		<p> Nick name : <input type="text" name="memnickname"></p>
 		<p> Agree : <input type="checkbox" name="memagree"></p>
 		<p> <input type="submit" name="signin_submit" value="Sign In"></p>

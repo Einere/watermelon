@@ -114,7 +114,7 @@
             $result = mysqli_query($conn,$sql);
             $count = mysqli_num_rows($result);
             //중복확인
-            else if($count!=0){
+            if($count!=0){
                 echo "<script>alert(\"전화번호가 이미 존재합니다\");location.replace('../../view/member/signinView.php');</script>";
             }
         }
@@ -132,11 +132,26 @@
             $result = mysqli_query($conn,$sql);
             $count = mysqli_num_rows($result);
             //중복확인
-            else if($count!=0){
+            if($count!=0){
                 echo "<script>alert(\"전화번호가 이미 존재합니다\");location.replace('../../view/member/signinView.php');</script>";
             }
+            
         }
     }
+
+    if(strlen($nickname)==0){
+        echo "<script>alert(\"닉네임을 입력해주세요\");location.replace('../../view/member/signinView.php');</script>";
+    }
+    else{
+            $sql = "SELECT * FROM member WHERE memnickname='$nickname'";
+            $result = mysqli_query($conn,$sql);
+            $count = mysqli_num_rows($result);
+            //중복확인
+            if($count!=0){
+                echo "<script>alert(\"닉네임이 이미 존재합니다\");location.replace('../../view/member/signinView.php');</script>";
+            }
+    }
+
 
     
 

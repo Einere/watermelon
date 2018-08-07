@@ -11,7 +11,7 @@
         session_start();
         $_SESSION['id']=$_POST['id'];
         echo "<script>alert(\"로그인에 성공하였습니다.\");
-        location.replace('../../view/board/listView.php');</script>";
+        location.replace('../../controller/board/listController.php');</script>";
     } else { // 로그인 실패 
         echo "<script>alert(\"로그인에 실패하였습니다.\");
         location.replace('../../view/member/loginView.php');</script>";

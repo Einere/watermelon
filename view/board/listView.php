@@ -18,7 +18,7 @@ class listView {
                 <dl>
                 <div style="float:right; margin-bottom:10px;">
                 <?php session_start(); $id = $_SESSION['username'];?>
-                    <dt><a href="http://www.project_kiwi.com/index.php/modules/board/BoardController/upload/?id=<?= $id; ?>"><input type="submit" value="등록" width="200px" ></a></dt>
+                    <dt><a href="../../controller/board/uploadController.php"><input type="submit" value="등록" width="200px" ></a></dt>
                 </div></dl>
             </header>
         </div>

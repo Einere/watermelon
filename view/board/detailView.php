@@ -97,16 +97,15 @@ class detailView {
     <tr align="center" valign="middle">
         <td colspan="5">
             <?php if($nickname == $login) { ?>
-            <a href="<?php echo base_url()."index.php/modules/board/BoardController/modify/".$post['postseq']."?nickname=".$nickname; ?>">
-                [수정]
-            </a>&nbsp;&nbsp;
-            <a href="<?php echo base_url()."index.php/modules/board/BoardController/delete/".$post['postseq']; ?>">
-                [삭제]
-            </a>&nbsp;&nbsp;
+            <input type="button" value='[수정]' onclick="location.href='<?= "../../controller/board/modifyController.php?postseq=".$post['postseq']."&nickname=".$nickname; ?>'">
+            &nbsp;&nbsp;
+            <a href="<?= "index.php/modules/board/BoardController/delete/".$post['postseq']; ?>">
+                <input type="button" value='[삭제]'>
+            </a> &nbsp;&nbsp;
             <?php } ?>
-            <a href="<?php echo base_url()."index.php/modules/board/BoardController/lists"; ?>">
-                [목록]
-            </a>&nbsp;&nbsp;
+            <a href="<?= "index.php/modules/board/BoardController/lists"; ?>">
+                <input type="button" value='[목록]'>
+            </a> &nbsp;&nbsp;
         </td>
     </tr>
 </table>

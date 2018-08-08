@@ -15,7 +15,7 @@
     $result = mysqli_query($conn, $sql);
     $post = mysqli_fetch_array($result);
 
-    //update view count
+    //update view count..
 ?>
 
 <!DOCTYPE html>

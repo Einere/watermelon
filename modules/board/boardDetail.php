@@ -7,28 +7,15 @@
     $count = $_GET['count'];
     
     //get db connection
-    $dbConnect = new connect();
+    $dbConnect = new dbconn();
     $conn = $dbConnect->get_conn();
 
     //select post tuple
-    $sql = "SELECT * FROM post WHERE postseq = $postseq";
+    $sql = "SELECT * FROM post, member WHERE postseq = $postseq AND member.memseq = post.member_memseq AND member.memid='1'";
     $result = mysqli_query($conn, $sql);
     $post = mysqli_fetch_array($result);
 
-    //get values
-    $member = new memberselect();
-    $result = $member->select_memseq($conn, $post['member_memseq']);
-    $nickname = $result['memnickname'];
-    $post['postviewcount']++;
-    $result = $member->select_memid($conn, $id);
-    $login = $result['memnickname'];
-
-    $board = new boardupdate();
-    $board->count_update($conn, $postseq, $post['postviewcount']);
-
-    $board_view = new detailView();
-    $board_view->detailShow($count, $nickname, $login, $post);
-    
+    //update view count
 ?>
 
 <!DOCTYPE html>

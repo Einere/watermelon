@@ -1,25 +1,48 @@
 <?php 
-class listView { 
-    public function listShow($list, $nickname) {?>
+session_start(); 
+$id = $_SESSION['username'];
+
+include '../../common/dbconn.php';
+
+//get db connection
+$dbConnect = new dbconn();
+$conn = $dbConnect->get_conn();
+
+//get post list
+$sql = "SELECT * FROM post WHERE postdelny='0' ORDER BY postseq DESC";
+$postList = mysqli_query($conn, $sql);
+$postList2 = mysqli_fetch_array($postList);
+
+//get all nickname
+$nicknameList = array();
+foreach($postList as $post) {
+    $memseq = $post["member_memseq"];
+    $sql = "SELECT * FROM member WHERE memseq = '$memseq'";
+    $result = mysqli_query($conn, $sql);
+    $member = mysqli_fetch_array($result);
+    array_push($nicknameList, $member['memnickname']);
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8"/>
         <title>BoardList</title>
-        
     </head>
     <body>
         <div>
             <header id = "header" data-role="header" data-position="fixed">
                 <blockquote>
                     <p>
-                        <span style="font-size:50px"><strong>BOARD</strong></span></p>
+                        <span style="font-size:50px"><strong>BOARD</strong></span>
+                    </p>
                 </blockquote>
                 <dl>
-                <div style="float:right; margin-bottom:10px;">
-                <?php session_start(); $id = $_SESSION['username'];?>
-                    <dt><a href="../../controller/board/uploadController.php"><input type="submit" value="등록" width="200px" ></a></dt>
-                </div></dl>
+                    <div style="float:right; margin-bottom:10px;">
+                        <dt><a href="../../controller/board/uploadController.php"><input type="submit" value="등록" width="200px" ></a></dt>
+                    </div>
+                </dl>
             </header>
         </div>
 
@@ -40,18 +63,18 @@ class listView {
                     <tbody>
                     <form name='check_delete' method='post'>
                         <?php
-                            $count = count($nickname);
+                            $count = count($nicknameList);
                             $num = 0;
 
-                            foreach($list as $lt) {
+                            foreach($postList as $post) {
                                 ?>
                                 <tr>
-                                    <td style="text-align:center"><input type="checkbox" value="<?= $lt['postseq'];?>" name="checkList[]"></td>
+                                    <td style="text-align:center"><input type="checkbox" value="<?= $post['postseq'];?>" name="checkList[]"></td>
                                     <th scope="row" style="text-align:center"><?= $count--;?></th>
-                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="../../controller/board/detailController.php?postseq=<?= $lt["postseq"]?>&count=<?= 1+$count?>&id=<?=$_SESSION['username'];?>"><?= $lt["posttitle"];?></a></td>
-                                    <td style="text-align:center"><?= $nickname[$num++];?></td>
-                                    <td style="text-align:center"><?= $lt["postviewcount"];?></td>
-                                    <td style="text-align:center"><?= $lt["posttime"];?></td>
+                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="../../modules/board/boardDetail.php?postseq=<?= $post["postseq"]?>&count=<?= $count+1?>&id=<?=$_SESSION['username'];?>"><?= $post["posttitle"];?></a></td>
+                                    <td style="text-align:center"><?= $nicknameList[$num++];?></td>
+                                    <td style="text-align:center"><?= $post["postviewcount"];?></td>
+                                    <td style="text-align:center"><?= $post["posttime"];?></td>
                                 </tr>
                                 <?php
                             }
@@ -72,11 +95,13 @@ class listView {
                             $print='log in';
                         }
                     ?>
-                    <dt><input type='button' value='진짜삭제' onClick='mydelete(1)'>
-                    <input type='button' value='가짜삭제' onClick='mydelete(2)'></dt>
+                    <dt>
+                        <input type='button' value='진짜삭제' onClick='mydelete(1)'>
+                        <input type='button' value='가짜삭제' onClick='mydelete(2)'>
+                    </dt>
                     </form>
-                    <dt><form action="http://project_kiwi.com/index.php/modules/member/MemberController"><input type="submit" name="logout" value="<?= $print ?>" width=100px></form></dt>
-                    
+                    <dt>
+                        <form action="http://project_kiwi.com/index.php/modules/member/MemberController"><input type="submit" name="logout" value="<?= $print ?>" width=100px></form></dt>
                     <dt>
                 </dl>
             </footer>
@@ -117,11 +142,5 @@ class listView {
                 }
             });
         </script>
-
-        
     </body>
 </html>
-<?php
-    }
-}
-?>

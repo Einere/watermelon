@@ -1,6 +1,23 @@
-<?php 
-class detailView { 
-    public function detailShow($count, $nickname, $login, $post) {?>
+<?php
+    include '../../common/dbconn.php';
+
+    //get clicked post information
+    $id = $_GET['id'];
+    $postseq = $_GET['postseq'];
+    $count = $_GET['count'];
+    
+    //get db connection
+    $dbConnect = new dbconn();
+    $conn = $dbConnect->get_conn();
+
+    //select post tuple
+    $sql = "SELECT * FROM post, member WHERE postseq = $postseq AND member.memseq = post.member_memseq AND member.memid='1'";
+    $result = mysqli_query($conn, $sql);
+    $post = mysqli_fetch_array($result);
+
+    //update view count..
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -112,6 +129,3 @@ class detailView {
 </body>
 
 </html>
-<?php 
-    }
-} ?>

@@ -3,10 +3,16 @@
     $dbconnect = new dbconn();
     $conn = $dbconnect->get_conn();
    
-    $sql = "SELECT * FROM member, emaillist, phone 
-	WHERE member.memseq = emaillist.member_memseq AND
-	member.memseq = phone.member_memseq AND
-    emaillist.edefault=1 AND phone.phdefault=1";
+    $sql = 
+            "SELECT * 
+            FROM 
+                member, 
+                emaillist, 
+                phone 
+	        WHERE member.memseq = emaillist.member_memseq 
+            AND member.memseq = phone.member_memseq 
+            AND emaillist.edefault=1 AND phone.phdefault=1";
+            
     $result = mysqli_query($conn, $sql);
 ?>
     <!DOCTYPE html>
@@ -45,8 +51,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php
-                    foreach($result as $rt) { ?>
+<?php
+    foreach($result as $rt) { 
+?>
                         <tr>
                             <td style="text-align:center"><input type="checkbox" value="<?= $rt['memseq'];?>" name="checkList[]"></td>
                             <th scope="row" style="text-align:center"><?= $rt['memseq']?></th>
@@ -61,12 +68,11 @@
                             <td style="text-align:center"><?= $rt["eemail"];?></td>
                             <td style="text-align:center"><?= $rt['phphonenum'];?></td>
                         </tr>
-                        <?php             
-                    }    
-                    ?>
+<?php             
+    }    
+?>
                     </tbody>
                 </table>
             </article>
         </body>
     </html>
-

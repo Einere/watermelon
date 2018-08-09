@@ -122,7 +122,7 @@
                 <input type="button" value='[삭제]'>
             </a> &nbsp;&nbsp;
             <?php } ?>
-            <a href="<?= "index.php/modules/board/BoardController/lists"; ?>">
+            <a href="<?= "./boardList.php"; ?>">
                 <input type="button" value='[목록]'>
             </a> &nbsp;&nbsp;
         </td>

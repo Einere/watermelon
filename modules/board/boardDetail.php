@@ -2,7 +2,7 @@
     include '../../common/dbconn.php';
 
     //get clicked post information
-    $id = $_GET['id'];
+    $loginId = $_GET['id'];
     $postseq = $_GET['postseq'];
     $count = $_GET['count'];
     
@@ -115,8 +115,8 @@
     </tr>
     <tr align="center" valign="middle">
         <td colspan="5">
-            <?php if($nickname == $login) { ?>
-            <input type="button" value='[수정]' onclick="location.href='<?= "../../controller/board/modifyController.php?postseq=".$post['postseq']."&nickname=".$nickname; ?>'">
+            <?php if($post['memnickname'] == $loginId) { ?>
+            <input type="button" value='[수정]' onclick="location.href='<?= "../../controller/board/modifyController.php?postseq=".$post['postseq']."&nickname=".$post['memnickname']; ?>'">
             &nbsp;&nbsp;
             <a href="<?= "index.php/modules/board/BoardController/delete/".$post['postseq']; ?>">
                 <input type="button" value='[삭제]'>

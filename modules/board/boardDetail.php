@@ -15,7 +15,9 @@
     $result = mysqli_query($conn, $sql);
     $post = mysqli_fetch_array($result);
 
-    //update view count..
+    //update view count
+    $sql = "UPDATE post SET postviewcount = $count WHERE postseq = $postseq";
+    mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +60,7 @@
             <div align="center">작성자&nbsp;&nbsp;</div>
         </td>
         <td style="font-family:돋음; font-size:12px;">
-        <?=$nickname;?>
+        <?=$post['memnickname'];?>
         </td>
     </tr>
     <tr>

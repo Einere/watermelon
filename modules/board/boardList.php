@@ -1,12 +1,7 @@
 <?php 
 session_start(); 
-$id = $_SESSION['username'];
 
 include '../../common/dbconn.php';
-
-//get db connection
-$dbConnect = new dbconn();
-$conn = $dbConnect->get_conn();
 
 //get post list
 $sql = "SELECT * FROM post WHERE postdelny='0' ORDER BY postseq DESC";
@@ -22,6 +17,14 @@ foreach($postList as $post) {
     $member = mysqli_fetch_array($result);
     array_push($nicknameList, $member['memnickname']);
 }
+
+if(isset($_SESSION['id'])) {
+    $print='Logout';
+} else {
+    $print='Login';
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -39,9 +42,21 @@ foreach($postList as $post) {
                     </p>
                 </blockquote>
                 <dl>
+                    <dt><input type="button" name="logout" value=<?= $print ?> onclick="login_click(this)" width="100px">
+                    <input type="button" name="Sign In" value="Sign In" onclick="login_click(this)" width="100px">
                     <div style="float:right; margin-bottom:10px;">
-                        <dt><a href="../../controller/board/uploadController.php"><input type="submit" value="등록" width="200px" ></a></dt>
+                        <?php
+                        if($print=="Login") { ?>
+                            <input type="submit" value="Post" width="200px" onclick="alert('로그인 하고 이용하세요.');">
+                        <?php 
+                        }
+                        else { ?>
+                        <a href="../../controller/board/uploadController.php"><input type="submit" value="Post" width="200px" ></a>
+                        <?php
+                        }
+                        ?>
                     </div>
+                    </dt>
                 </dl>
             </header>
         </div>
@@ -85,27 +100,23 @@ foreach($postList as $post) {
         <div>
             <footer id="footer">
                 <dl>
-                    <?php 
-                        if($id!=NULL)
-                        {
-                            $print='logout';
-                        }
-                        else
-                        {
-                            $print='log in';
-                        }
-                    ?>
                     <dt>
                         <input type='button' value='진짜삭제' onClick='mydelete(1)'>
                         <input type='button' value='가짜삭제' onClick='mydelete(2)'>
                     </dt>
                     </form>
-                    <dt>
-                        <form action="http://project_kiwi.com/index.php/modules/member/MemberController"><input type="submit" name="logout" value="<?= $print ?>" width=100px></form></dt>
-                    <dt>
                 </dl>
             </footer>
         </div>
+
+        <script>
+            function login_click(obj) {
+                    var popUrl = "../member/memberLogin.php?print="+obj.value;	//팝업창에 출력될 페이지 URL
+                    var popOption = "width=450, height=180, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+                    window.open(popUrl,"",popOption);
+
+            }
+        </script>
 
         <script>
             function mydelete (index)
@@ -120,8 +131,6 @@ foreach($postList as $post) {
                 {
                     document.check_delete.action="http://project_kiwi.com/index.php/modules/board/BoardController/false_delete";
                 }
-
-
                 document.check_delete.submit();
             };    
         </script>

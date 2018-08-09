@@ -13,7 +13,7 @@
         <p><input type="text" name="pw"></p>   
         <p><input type="submit" value="Login" style="width:50px"> </p>
     </form>  
-    <a href="signinView.php"><input type="button" value="join" style="width:50px"></a>
+    <a href="signinView.php"><input type="button" value="Sign In" style="width:50px"></a>
     <script>
     </script>
 </body>  

@@ -4,7 +4,7 @@
     $conn = $dbConnect->get_conn();
 
     //넘어온 데이터 저장
-    $id = $_POST['memid']; 
+    $id = $_POST['memid'];
     $pw = $_POST['mempw'];
     $cpw = $_POST['memcpw'];
     $firstname = $_POST['memfirstname'];

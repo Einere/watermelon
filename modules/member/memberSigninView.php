@@ -148,7 +148,7 @@
         <button id="myBtn">Sign in</button>
     </p>
     <!-- Back to List -->
-    <a href="loginView.php" ><input type="button" value="cancle" style="width:50px"></a>
+    <a href="../../modules/member/memberLogin.php" ><input type="button" value="cancle" style="width:50px"></a>
     
 	<script>
         window.onload = function(){

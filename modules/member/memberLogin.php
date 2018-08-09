@@ -1,19 +1,37 @@
+
+<?php
+    session_start();
+    if($_GET['print']=="Logout") {
+        unset($_SESSION['id']);
+        ?>
+        <script>
+            window.opener.location.reload();
+            window.close();
+        </script>
+        <?php
+    }
+?>
 <!DOCTYPE html>  
 <html lang="en">  
-
 <head>  
     <meta charset="utf-8">  
     <title>Login Page</title>  
 </head>  
 <body>  
+    <center>
     <h1>Login</h1>  
-
-    <form name="initView" action="../../controller/member/loginController.php" method="post">
-        <p><input type="text" name="id"></p>
-        <p><input type="text" name="pw"></p>   
-        <p><input type="submit" value="Login" style="width:50px"> </p>
+    <form name="loginView" action="memberCheck.php" method="post">
+        <table>
+        <tr>
+            <td><input type="text" name="id"></td>
+            <td rowspan="2"><input type="submit" value="Login" style="width:70px; height:50px"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="pw"></td>
+        </tr>
+        </table>
     </form>  
-    <a href="signinView.php"><input type="button" value="Sign In" style="width:50px"></a>
+    </center>
     <script>
     </script>
 </body>  

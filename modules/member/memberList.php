@@ -1,7 +1,5 @@
 <?php 
     include '../../common/dbconn.php';
-    $dbconnect = new dbconn();
-    $conn = $dbconnect->get_conn();
    
     $sql = 
             "SELECT * 

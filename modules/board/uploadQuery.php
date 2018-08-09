@@ -1,7 +1,5 @@
 <?php
     include '../../common/dbconn.php';
-    $dbconnect = new dbconn();
-    $conn = $dbconnect->get_conn();
 
     $today = date("Y-m-d H:i:s"); 
     $id = $_POST['id'];

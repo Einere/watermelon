@@ -22,7 +22,7 @@ if(isset($_GET['page'])) {
 }
 
 $count = $total_count - 10*($page-1);
-$pagecount = ($page-1)*$limit;
+$pagestart = ($page-1)*$limit;
 //get post list
 $sql = "
         SELECT 
@@ -34,7 +34,7 @@ $sql = "
         ORDER BY 
             postseq DESC
         LIMIT
-            $pagecount, $limit
+            $pagestart, $limit
         ";
 $postList = mysqli_query($conn, $sql);
 $postList2 = mysqli_fetch_array($postList);
@@ -146,7 +146,7 @@ if(isset($_SESSION['id'])) {
                         <a href="boardList.php?page=<?= $i ?>"><?= $i ?></a>
                         <?php
                     } else {
-                        echo $i;
+                        echo '<strong>'.$i.'</strong>';
                     }
                 } ?>
         </center>

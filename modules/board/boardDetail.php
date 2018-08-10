@@ -1,18 +1,21 @@
 <?php
     include '../../common/dbconn.php';
 
+    session_start();
     //get clicked post information
-    $loginId = $_GET['id'];
+    $loginId = $_SESSION['id'];
     $postseq = $_GET['postseq'];
     $count = $_GET['count'];
     
     //select post tuple
-    $sql = "SELECT * FROM post, member WHERE postseq = $postseq AND member.memseq = post.member_memseq AND member.memid='1'";
+    $sql = "SELECT * FROM post, member WHERE postseq = $postseq AND member.memseq = post.member_memseq";
     $result = mysqli_query($conn, $sql);
     $post = mysqli_fetch_array($result);
-
+    $writeId = $post['memid'];
+    $postcount = ++$post['postviewcount'];
+    
     //update view count
-    $sql = "UPDATE post SET postviewcount = $count WHERE postseq = $postseq";
+    $sql = "UPDATE post SET postviewcount = $postcount WHERE postseq = $postseq";
     mysqli_query($conn, $sql);
 ?>
 
@@ -111,16 +114,15 @@
     </tr>
     <tr align="center" valign="middle">
         <td colspan="5">
-            <?php if($post['memnickname'] == $loginId) { ?>
-            <input type="button" value='[수정]' onclick="location.href='<?= "../../controller/board/modifyController.php?postseq=".$post['postseq']."&nickname=".$post['memnickname']; ?>'">
+            <?php if($writeId == $loginId) { ?>
+            <input type="button" value='[수정]' onclick="location.href='<?= "boardUpload.php?name=Modify&postseq=".$post['postseq']; ?>'">
             &nbsp;&nbsp;
-            <a href="<?= "index.php/modules/board/BoardController/delete/".$post['postseq']; ?>">
-                <input type="button" value='[삭제]'>
-            </a> &nbsp;&nbsp;
+
+            <input type="button" value='[삭제]' onclick="location.href='<?= "../../controller/board/modifyController.php?postseq=".$post['postseq']."&nickname=".$post['memnickname']; ?>'">
+            &nbsp;&nbsp;
             <?php } ?>
-            <a href="<?= "./boardList.php"; ?>">
-                <input type="button" value='[목록]'>
-            </a> &nbsp;&nbsp;
+            <input type="button" value='[목록]' onclick="location.href='<?= 'boardList.php'?>'">
+             &nbsp;&nbsp;
         </td>
     </tr>
 </table>

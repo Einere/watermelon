@@ -51,7 +51,7 @@ if(isset($_SESSION['id'])) {
                         <?php 
                         }
                         else { ?>
-                        <a href="../board/boardUpload.php"><input type="submit" value="Post" width="200px" ></a>
+                        <a href="../board/boardUpload.php?name=Upload"><input type="submit" value="Post" width="200px" ></a>
                         <?php
                         }
                         ?>
@@ -86,7 +86,7 @@ if(isset($_SESSION['id'])) {
                                 <tr>
                                     <td style="text-align:center"><input type="checkbox" value="<?= $post['postseq'];?>" name="checkList[]"></td>
                                     <th scope="row" style="text-align:center"><?= $count--;?></th>
-                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="../../modules/board/boardDetail.php?postseq=<?= $post["postseq"]?>&count=<?= $count+1?>&id=<?=$_SESSION['username'];?>"><?= $post["posttitle"];?></a></td>
+                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="boardDetail.php?postseq=<?= $post["postseq"]?>&count=<?= $count+1?>"><?= $post["posttitle"];?></a></td>
                                     <td style="text-align:center"><?= $nicknameList[$num++];?></td>
                                     <td style="text-align:center"><?= $post["postviewcount"];?></td>
                                     <td style="text-align:center"><?= $post["posttime"];?></td>

@@ -3,12 +3,12 @@
     
     $id = $_POST['id'];
     $pw = $_POST['pw'];
-    $sql = "SELECT * FROM member WHERE memid = $id AND mempw = $pw";
+    $sql = "SELECT * FROM member WHERE memid = '$id' AND mempw = '$pw'";
     $result = mysqli_query($conn, $sql);
     session_start();
 
     if(mysqli_num_rows($result) == 1) { // 로그인 성공 
-        $_SESSION['id']=$_POST['id'];
+        $_SESSION['id']=$id;
         ?>
         <script>
             alert("로그인에 성공하였습니다.");
@@ -21,7 +21,7 @@
     ?>
         <script>
             alert("로그인에 실패하였습니다.");
-            location.replace('memberLogin?print=Login.php');
+            location.replace('memberLogin.php?print=Login');
         </script>
     <?php
     }

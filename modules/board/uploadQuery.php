@@ -5,30 +5,35 @@
     $id = $_POST['id'];
     $posttitle = $_POST['posttitle'];
     $postcontent= $_POST['postcontent'];
-    $sql = "SELECT * 
-            FROM 
-                member 
-            WHERE 
-                memid = '$id'
-            ";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_array($result);
-    $memseq = $row['memseq'];
+    $memseq = $_POST['memseq'];
 
-    $sql = "INSERT INTO post(
-                member_memseq, 
-                posttitle, 
-                postcontent, 
-                posttime, 
-                postfile
-            )
-            VALUES ( 
-                $memseq,
-                '$posttitle', 
-                '$postcontent', 
-                '$today', 
-                ''
-            )";
+    if($_GET['name'] =='Upload') {
+        $sql = "INSERT INTO post(
+                    member_memseq, 
+                    posttitle, 
+                    postcontent, 
+                    posttime, 
+                    postfile
+                )
+                VALUES ( 
+                    $memseq,
+                    '$posttitle', 
+                    '$postcontent', 
+                    '$today', 
+                    ''
+                )";
 
-    mysqli_query($conn, $sql);
+        mysqli_query($conn, $sql);
+    } else {
+        $postseq = $_GET['postseq'];
+        $sql = "UPDATE post 
+                SET 
+                    posttitle='$posttitle', 
+                    postcontent='$postcontent' 
+                WHERE 
+                    postseq = '$postseq'
+                ";
+        mysqli_query($conn, $sql);
+    }
+    Header("Location:boardList.php");
 ?>

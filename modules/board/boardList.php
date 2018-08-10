@@ -2,11 +2,43 @@
 session_start(); 
 
 include '../../common/dbconn.php';
+$limit = 10;
 
+$sql = "SELECT 
+            COUNT(*)
+        FROM
+            post
+        WHERE
+            postDelNY = 0
+        ";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_array($result);
+$total_count = $row['COUNT(*)'];
+
+$total_page = ceil($total_count/$limit);
+$page=1;
+if(isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
+
+$count = $total_count - 10*($page-1);
+$pagecount = ($page-1)*$limit;
 //get post list
-$sql = "SELECT * FROM post WHERE postdelny='0' ORDER BY postseq DESC";
+$sql = "
+        SELECT 
+            * 
+        FROM 
+            post 
+        WHERE 
+            postdelny='0' 
+        ORDER BY 
+            postseq DESC
+        LIMIT
+            $pagecount, $limit
+        ";
 $postList = mysqli_query($conn, $sql);
 $postList2 = mysqli_fetch_array($postList);
+
 
 //get all nickname
 $nicknameList = array();
@@ -78,7 +110,6 @@ if(isset($_SESSION['id'])) {
                     <tbody>
                     <form name='check_delete' method='post'>
                         <?php
-                            $count = count($nicknameList);
                             $num = 0;
 
                             foreach($postList as $post) {
@@ -108,7 +139,17 @@ if(isset($_SESSION['id'])) {
                 </dl>
             </footer>
         </div>
-
+        <center>
+            <?php
+                for($i=1; $i<=$total_page; $i++) {
+                    if($i != $page) { ?>
+                        <a href="boardList.php?page=<?= $i ?>"><?= $i ?></a>
+                        <?php
+                    } else {
+                        echo $i;
+                    }
+                } ?>
+        </center>
         <script>
             function login_click(obj) {
                     var popUrl = "../member/memberLogin.php?print="+obj.value;	//팝업창에 출력될 페이지 URL
@@ -125,11 +166,11 @@ if(isset($_SESSION['id'])) {
                 //진짜삭제
                 if(index==1)
                 {
-                    document.check_delete.action="http://project_kiwi.com/index.php/modules/board/BoardController/true_delete";
+                    document.check_delete.action="boardDelete.php?del=true_delete";
                 }
                 else
                 {
-                    document.check_delete.action="http://project_kiwi.com/index.php/modules/board/BoardController/false_delete";
+                    document.check_delete.action="boardDelete.php?del=false_delete";
                 }
                 document.check_delete.submit();
             };    

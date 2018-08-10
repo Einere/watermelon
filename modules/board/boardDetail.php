@@ -3,7 +3,9 @@
 
     session_start();
     //get clicked post information
-    $loginId = $_SESSION['id'];
+    $loginId = '';
+    if(isset($_SESSION['id']))
+        $loginId = $_SESSION['id'];
     $postseq = $_GET['postseq'];
     $count = $_GET['count'];
     
@@ -118,7 +120,7 @@
             <input type="button" value='[수정]' onclick="location.href='<?= "boardUpload.php?name=Modify&postseq=".$post['postseq']; ?>'">
             &nbsp;&nbsp;
 
-            <input type="button" value='[삭제]' onclick="location.href='<?= "../../controller/board/modifyController.php?postseq=".$post['postseq']."&nickname=".$post['memnickname']; ?>'">
+            <input type="button" value='[삭제]' onclick="location.href='<?= "boardDelete.php?del=true_delete&postseq=".$post['postseq']; ?>'">
             &nbsp;&nbsp;
             <?php } ?>
             <input type="button" value='[목록]' onclick="location.href='<?= 'boardList.php'?>'">

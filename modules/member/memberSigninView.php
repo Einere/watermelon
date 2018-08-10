@@ -129,7 +129,7 @@
 	</div>
 
 	<h1>Sign In</h1>
-	<form action="../../controller/member/signinController.php" method='post'> 
+	<form action="../../modules/member/memberSigninProcess.php" method='post'> 
 		<p> ID : <input type="text" name="memid"><label name="memid" style="color:red;"></label></p>
 		<p> Password : <input type="password" name="mempw" ><label name="mempw" style="color:red;"></label></p>
 		<p> Confirm Password : <input type="password" name="memcpw" ><label name="memcpw" style="color:red;"></label></p>
@@ -222,7 +222,7 @@
 
                 //check address
                 let address = document.getElementsByName('memaddr');
-                warn(address[0], address[1], /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{1,255}$/, "영숫자 최대 255자 이하.");
+                warn(address[0], address[1], /^[A-Za-z0-9\d]{1,255}$/, "영숫자 최대 255자 이하.");
 
                 //check default email
                 let defaultEmail = document.getElementsByName('eemail');
@@ -247,7 +247,7 @@
                 //check nickname
                 let nick = document.getElementsByName('memnickname');
                 warn(nick[0], nick[1], /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,15}$/, "영숫자 2~15자.");
-
+                console.log(valid);
                 //if validate, show modal 
                 if(valid){
                     modal.style.display = "block";

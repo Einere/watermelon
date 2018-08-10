@@ -125,11 +125,11 @@ if(isset($_SESSION['id'])) {
                 //진짜삭제
                 if(index==1)
                 {
-                    document.check_delete.action="http://project_kiwi.com/index.php/modules/board/BoardController/true_delete";
+                    document.check_delete.action="boardDelete.php?del=true_delete";
                 }
                 else
                 {
-                    document.check_delete.action="http://project_kiwi.com/index.php/modules/board/BoardController/false_delete";
+                    document.check_delete.action="boardDelete.php?del=false_delete";
                 }
                 document.check_delete.submit();
             };    

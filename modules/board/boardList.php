@@ -51,7 +51,7 @@ if(isset($_SESSION['id'])) {
                         <?php 
                         }
                         else { ?>
-                        <a href="../../controller/board/uploadController.php"><input type="submit" value="Post" width="200px" ></a>
+                        <a href="../board/boardUpload.php"><input type="submit" value="Post" width="200px" ></a>
                         <?php
                         }
                         ?>

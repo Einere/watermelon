@@ -43,7 +43,7 @@ if(isset($_SESSION['id'])) {
                 </blockquote>
                 <dl>
                     <dt><input type="button" name="logout" value=<?= $print ?> onclick="login_click(this)" width="100px">
-                    <input type="button" name="Sign In" value="Sign In" onclick="login_click(this)" width="100px">
+                    <a href="../member/memberSigninView.php"><input type="button" name="Sign In" value="Sign In" width="100px"></a>
                     <div style="float:right; margin-bottom:10px;">
                         <?php
                         if($print=="Login") { ?>

@@ -30,9 +30,15 @@
     WHERE 
         memid = '$id'
     ";
+    $count = 0;
+
+    //수정이면
+    if(isset($_GET['count']))
+        $count=$_GET['count'];
 
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_array($result);
+
 ?>
 <!DOCTYPE html>  
 <html>  
@@ -41,7 +47,7 @@
 </head>  
 <body>  
     <h1><?= $pageTitle ?></h1>  
-        <form action='<?= "uploadQuery.php?name=$pageTitle&postseq=$postseq"?>' method='post'>
+        <form action='<?= "uploadQuery.php?name=$pageTitle&postseq=$postseq&count=$count"?>' method='post'>
             <table border=1 width=100%>
                 <input type="hidden" name='memseq' value='<?= $row['memseq'] ?>'>
                 <thead>

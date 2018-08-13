@@ -75,14 +75,15 @@ if(isset($_SESSION['id'])) {
                 </blockquote>
                 <dl>
                     <dt><input type="button" name="logout" value=<?= $print ?> onclick="login_click(this)" width="100px">
-                    <a href="../member/memberSigninView.php"><input type="button" name="Sign In" value="Sign In" width="100px"></a>
-                    <div style="float:right; margin-bottom:10px;">
                         <?php
                         if($print=="Login") { ?>
+                            <a href="../member/memberSigninView.php"><input type="button" name="Sign In" value="Sign In" width="100px"></a>
+                            <div style="float:right; margin-bottom:10px;">
                             <input type="submit" value="Post" width="200px" onclick="alert('로그인 하고 이용하세요.');">
                         <?php 
                         }
                         else { ?>
+                        <div style="float:right; margin-bottom:10px;">
                         <a href="../board/boardUpload.php?name=Upload"><input type="submit" value="Post" width="200px" ></a>
                         <?php
                         }

@@ -117,7 +117,7 @@
     <tr align="center" valign="middle">
         <td colspan="5">
             <?php if($writeId == $loginId) { ?>
-            <input type="button" value='[수정]' onclick="location.href='<?= "boardUpload.php?name=Modify&postseq=".$post['postseq']; ?>'">
+            <input type="button" value='[수정]' onclick="location.href='<?= "boardUpload.php?name=Modify&postseq=".$post['postseq']."&count=".$count; ?>'">
             &nbsp;&nbsp;
 
             <input type="button" value='[삭제]' onclick="location.href='<?= "boardDelete.php?del=true_delete&postseq=".$post['postseq']; ?>'">

@@ -3,7 +3,6 @@
 
     $search_text = $_POST['search_text'];
     $search_choice = $_POST['search_choice'];
-    var_dump('aaa');
     if($search_choice=='search_title'){
 
     }

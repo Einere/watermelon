@@ -82,7 +82,8 @@ if(isset($_SESSION['id'])) {
                         <option value="search_writer">등록자</option>
                     </select>
                     <input type='text' name='search_text' >
-                    <input type='submit' value='검색!'>
+                    <!-- <input type='submit' value='검색!'> -->
+                    <a href="boardSearchList.php"><input type="submit" value="검색!"></a>
                 </form>
                 </center>
                 <dl>

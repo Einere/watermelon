@@ -50,5 +50,5 @@
         mysqli_query($conn, $sql);
     }
 
-    Header("Location:boardDetail.php?postseq=$postseq&count=$count");
+    Header("Location:boardView.php?name=Upload&postseq=$postseq&count=$count");
 ?>

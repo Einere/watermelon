@@ -84,7 +84,7 @@ if(isset($_SESSION['id'])) {
                         }
                         else { ?>
                         <div style="float:right; margin-bottom:10px;">
-                        <a href="../board/boardUpload.php?name=Upload"><input type="submit" value="Post" width="200px" ></a>
+                        <a href="../board/boardForm.php?name=Upload"><input type="submit" value="Post" width="200px" ></a>
                         <?php
                         }
                         ?>
@@ -118,7 +118,7 @@ if(isset($_SESSION['id'])) {
                                 <tr>
                                     <td style="text-align:center"><input type="checkbox" value="<?= $post['postseq'];?>" name="checkList[]"></td>
                                     <th scope="row" style="text-align:center"><?= $count--;?></th>
-                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="boardDetail.php?postseq=<?= $post["postseq"]?>&count=<?= $count+1?>"><?= $post["posttitle"];?></a></td>
+                                    <td style="text-align:center"><a style="text-decoration:none; color:black" href="boardView.php?postseq=<?= $post["postseq"]?>&count=<?= $count+1?>"><?= $post["posttitle"];?></a></td>
                                     <td style="text-align:center"><?= $nicknameList[$num++];?></td>
                                     <td style="text-align:center"><?= $post["postviewcount"];?></td>
                                     <td style="text-align:center"><?= $post["posttime"];?></td>
@@ -165,15 +165,18 @@ if(isset($_SESSION['id'])) {
             {
                 // console.log(index);
                 //진짜삭제
-                if(index==1)
-                {
-                    document.check_delete.action="boardDelete.php?del=true_delete";
+                var con_test = confirm("정말로 삭제 하시겠습니까?");
+                if(con_test == true){
+                    if(index==1)
+                    {
+                        document.check_delete.action="boardDelete.php?del=true_delete";
+                    }
+                    else
+                    {
+                        document.check_delete.action="boardDelete.php?del=false_delete";
+                    }
+                    document.check_delete.submit();
                 }
-                else
-                {
-                    document.check_delete.action="boardDelete.php?del=false_delete";
-                }
-                document.check_delete.submit();
             };    
         </script>
 

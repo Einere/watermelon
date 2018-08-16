@@ -21,6 +21,10 @@ if(isset($_GET['page'])) {
     $page = $_GET['page'];
 }
 
+if(isset($_GET['limit'])) {
+    $limit = $_GET['limit'];
+}
+
 $count = $total_count - 10*($page-1);
 $pagestart = ($page-1)*$limit;
 //get post list
@@ -100,7 +104,17 @@ if(isset($_SESSION['id'])) {
                         <a href="../board/boardForm.php?name=Upload"><input type="submit" value="Post" width="200px" ></a>
                         <?php
                         }
-                        ?>
+                        ?><br>
+                        <select id="list_count" onchange="limit_change()">
+                            <option value="10" selected>10</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <script>
+                            var sel = document.getElementById("list_count");
+                            sel.options[sel.selectedIndex].selected = <?= limit ?>;
+                        </script>
                     </div>
                     </dt>
                 </dl>
@@ -208,6 +222,16 @@ if(isset($_SESSION['id'])) {
                     }
                 }
             });
+        </script>
+
+        <script>
+            function limit_change() {
+                var page = <?= $page ?>;
+                var sel = document.getElementById("list_count");
+                var val = sel.options[sel.selectedIndex].value;
+
+                location.href="boardList.php?page="+page+"&limit="+val;
+            }
         </script>
     </body>
 </html>

@@ -73,6 +73,18 @@ if(isset($_SESSION['id'])) {
                         <span style="font-size:50px"><strong>BOARD</strong></span>
                     </p>
                 </blockquote>
+                <center>
+                <form name='search' method='post' action="boardSearchList.php">
+                    <select name="search_choice">
+                        <option value="search_title" selected>제목</option>
+                        <option value="search_content">내용</option>
+                        <option value="search_all">제목+내용</option>
+                        <option value="search_writer">등록자</option>
+                    </select>
+                    <input type='text' name='search_text' >
+                    <input type='submit' value='검색!'>
+                </form>
+                </center>
                 <dl>
                     <dt><input type="button" name="logout" value=<?= $print ?> onclick="login_click(this)" width="100px">
                         <?php

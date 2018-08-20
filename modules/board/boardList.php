@@ -3,6 +3,19 @@ session_start();
 
 include '../../common/dbconn.php';
 $limit = 10;
+$search_title = '';
+$search_content = '';
+
+if(isset($_GET['search_choice'])) {
+    if($_GET['search_choice'] == 'search_title') {
+        $search_title = '%'.$_GET['search_text'].'%';
+    } else if($_GET['search_choice'] == 'search_content') {
+        $search_content = '%'.$_GET['search_text'].'%';
+    } else {
+        $search_title = '%'.$_GET['search_text'].'%';
+        $search_content = '%'.$_GET['search_text'].'%';
+    }
+}
 
 $sql = "SELECT 
             COUNT(*)
@@ -10,22 +23,33 @@ $sql = "SELECT
             post
         WHERE
             postDelNY = 0
+        AND posttitle Like '$search_title'
+        OR postcontent Like '$search_content'
         ";
+
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 $total_count = $row['COUNT(*)'];
 
-$total_page = ceil($total_count/$limit);
 $page=1;
 if(isset($_GET['page'])) {
     $page = $_GET['page'];
+} else {
+    if(isset($_SESSION['page']))
+        $page=$_SESSION['page'];
 }
-
 if(isset($_GET['limit'])) {
     $limit = $_GET['limit'];
+} else {
+    if(isset($_SESSION['limit']))
+        $limit=$_SESSION['limit'];
 }
 
-$count = $total_count - 10*($page-1);
+$_SESSION['page'] = $page;
+$_SESSION['limit'] = $limit;
+
+$count = $total_count - $limit*($page-1);
+$total_page = ceil($total_count/$limit);
 $pagestart = ($page-1)*$limit;
 //get post list
 $sql = "
@@ -34,7 +58,9 @@ $sql = "
         FROM 
             post 
         WHERE 
-            postdelny='0' 
+            postdelny='0'
+        AND posttitle Like '$search_title'
+        OR postcontent Like '$search_content' 
         ORDER BY 
             postseq DESC
         LIMIT
@@ -78,16 +104,16 @@ if(isset($_SESSION['id'])) {
                     </p>
                 </blockquote>
                 <center>
-                <form name='search' method='post' action="boardSearchList.php">
-                    <select name="search_choice">
+                <form name='search' method='post'>
+                    <select name="search_choice" id ="search_choice">
                         <option value="search_title" selected>제목</option>
                         <option value="search_content">내용</option>
                         <option value="search_all">제목+내용</option>
                         <option value="search_writer">등록자</option>
                     </select>
-                    <input type='text' name='search_text' >
+                    <input type='text' name='search_text' id='search_text' >
                     <!-- <input type='submit' value='검색!'> -->
-                    <a href="boardSearchList.php"><input type="submit" value="검색!"></a>
+                    <input type="button" value="검색 !" onclick="search_click()">
                 </form>
                 </center>
                 <dl>
@@ -113,7 +139,15 @@ if(isset($_SESSION['id'])) {
                         </select>
                         <script>
                             var sel = document.getElementById("list_count");
-                            sel.options[sel.selectedIndex].selected = <?= limit ?>;
+                            var limit = <?= $limit ?>;
+                            for(var i = 0; i < sel.options.length; i++)
+                            {
+                                if(limit == sel.options[i].value)
+                                {
+                                    sel.options[i].selected = true;
+                                    break;
+                                }
+                            }
                         </script>
                     </div>
                     </dt>
@@ -188,6 +222,18 @@ if(isset($_SESSION['id'])) {
         </script>
 
         <script>
+            function search_click() {
+                var page = 1;
+                var limit = <?= $limit ?>;
+                var sel = document.getElementById("search_choice");
+                var val = sel.options[sel.selectedIndex].value;
+                var text = document.getElementById("search_text").value;
+
+                location.href="boardList.php?page="+page+"&limit="+limit+"&search_choice="+val+"&search_text="+text;                    
+            }
+        </script>
+
+        <script>
             function mydelete (index)
             {
                 // console.log(index);
@@ -226,10 +272,10 @@ if(isset($_SESSION['id'])) {
 
         <script>
             function limit_change() {
-                var page = <?= $page ?>;
+                //var page = <?= $page ?>;
+                var page = 1;
                 var sel = document.getElementById("list_count");
                 var val = sel.options[sel.selectedIndex].value;
-
                 location.href="boardList.php?page="+page+"&limit="+val;
             }
         </script>

@@ -5,32 +5,47 @@ include '../../common/dbconn.php';
 $limit = 10;
 $search_title = '';
 $search_content = '';
-
+$search_writer = '';
+$search_choice = '';
 if(isset($_GET['search_choice'])) {
+    $search_choice = $_GET['search_choice'];
     if($_GET['search_choice'] == 'search_title') {
         $search_title = '%'.$_GET['search_text'].'%';
     } else if($_GET['search_choice'] == 'search_content') {
         $search_content = '%'.$_GET['search_text'].'%';
+    } else if($_GET['search_choice'] == 'search_writer'){
+        $search_writer = '%'.$_GET['search_text'].'%';
     } else {
         $search_title = '%'.$_GET['search_text'].'%';
         $search_content = '%'.$_GET['search_text'].'%';
     }
-}
-
-$sql = "SELECT 
+    $sql = "SELECT 
             COUNT(*)
         FROM
-            post
+            post, member
         WHERE
-            postDelNY = 0
-        AND posttitle Like '$search_title'
-        OR postcontent Like '$search_content'
+            postDelNY = 0 
+            AND post.member_memseq = member.memseq
+            AND (posttitle Like '$search_title'
+            OR postcontent Like '$search_content'
+            OR memnickname Like '$search_writer')
         ";
+} else{
+    $sql = "SELECT 
+            COUNT(*)
+        FROM
+            post, member
+        WHERE
+            postDelNY = 0 
+            AND post.member_memseq = member.memseq
+        ";
+}
 
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result);
 $total_count = $row['COUNT(*)'];
 
+//페이지 찾기
 $page=1;
 if(isset($_GET['page'])) {
     $page = $_GET['page'];
@@ -48,37 +63,59 @@ if(isset($_GET['limit'])) {
 $_SESSION['page'] = $page;
 $_SESSION['limit'] = $limit;
 
+//페이지 개수세기
 $count = $total_count - $limit*($page-1);
 $total_page = ceil($total_count/$limit);
 $pagestart = ($page-1)*$limit;
-//get post list
-$sql = "
-        SELECT 
-            * 
-        FROM 
-            post 
-        WHERE 
-            postdelny='0'
-        AND posttitle Like '$search_title'
-        OR postcontent Like '$search_content' 
-        ORDER BY 
-            postseq DESC
-        LIMIT
-            $pagestart, $limit
-        ";
+
+if(isset($_GET['search_choice'])){
+    //get post list
+    $sql = "SELECT 
+                * 
+            FROM 
+                post, member 
+            WHERE 
+                postdelny='0'
+                AND post.member_memseq = member.memseq
+                AND (posttitle Like '$search_title'
+                OR postcontent Like '$search_content' 
+                OR memnickname Like '$search_writer')
+
+            ORDER BY 
+                postseq DESC
+            LIMIT
+                $pagestart, $limit
+            ";
+} else{
+    //get post list
+    $sql = "SELECT 
+                * 
+            FROM 
+                post, member 
+            WHERE 
+                postdelny='0'
+                AND post.member_memseq = member.memseq
+                
+
+            ORDER BY 
+                postseq DESC
+            LIMIT
+                $pagestart, $limit
+            ";
+}
 $postList = mysqli_query($conn, $sql);
 $postList2 = mysqli_fetch_array($postList);
 
 
-//get all nickname
-$nicknameList = array();
-foreach($postList as $post) {
-    $memseq = $post["member_memseq"];
-    $sql = "SELECT * FROM member WHERE memseq = '$memseq'";
-    $result = mysqli_query($conn, $sql);
-    $member = mysqli_fetch_array($result);
-    array_push($nicknameList, $member['memnickname']);
-}
+// //get all nickname
+// $nicknameList = array();
+// foreach($postList as $post) {
+//     $memseq = $post["member_memseq"];
+//     $sql = "SELECT * FROM member WHERE memseq = '$memseq'";
+//     $result = mysqli_query($conn, $sql);
+//     $member = mysqli_fetch_array($result);
+//     array_push($nicknameList, $member['memnickname']);
+// }
 
 if(isset($_SESSION['id'])) {
     $print='Logout';
@@ -100,21 +137,34 @@ if(isset($_SESSION['id'])) {
             <header id = "header" data-role="header" data-position="fixed">
                 <blockquote>
                     <p>
-                        <span style="font-size:50px"><strong>BOARD</strong></span>
+                        <a href = 'boardList.php'> <span style="font-size:50px"><strong>BOARD</strong></span></a>
                     </p>
                 </blockquote>
                 <center>
-                <form name='search' method='post'>
                     <select name="search_choice" id ="search_choice">
                         <option value="search_title" selected>제목</option>
                         <option value="search_content">내용</option>
                         <option value="search_all">제목+내용</option>
                         <option value="search_writer">등록자</option>
                     </select>
+                    
                     <input type='text' name='search_text' id='search_text' >
                     <!-- <input type='submit' value='검색!'> -->
                     <input type="button" value="검색 !" onclick="search_click()">
-                </form>
+                    <script>
+                        //유지 되게 하기
+                        var sel = document.getElementById("search_choice");
+                        var search = '<?= $search_choice ?>';
+                        for(var i = 0; i < sel.options.length; i++)
+                        {
+                            if(search == sel.options[i].value)
+                            {
+                                sel.options[i].selected = true;
+                                break;
+                            }
+                        }
+                        document.getElementById("search_text").value = '<?= $_GET['search_text']?>';
+                    </script>
                 </center>
                 <dl>
                     <dt><input type="button" name="logout" value=<?= $print ?> onclick="login_click(this)" width="100px">
@@ -138,6 +188,7 @@ if(isset($_SESSION['id'])) {
                             <option value="100">100</option>
                         </select>
                         <script>
+                            //유지되게 하기
                             var sel = document.getElementById("list_count");
                             var limit = <?= $limit ?>;
                             for(var i = 0; i < sel.options.length; i++)
@@ -173,14 +224,17 @@ if(isset($_SESSION['id'])) {
                     <form name='check_delete' method='post'>
                         <?php
                             $num = 0;
-
+                            if($count == 0){
+                                ?> <tr><td colspan="6"><center><strong>검색결과가 없습니다!</strong></center></td></tr>
+                                <?php
+                            }
                             foreach($postList as $post) {
                                 ?>
                                 <tr>
                                     <td style="text-align:center"><input type="checkbox" value="<?= $post['postseq'];?>" name="checkList[]"></td>
                                     <th scope="row" style="text-align:center"><?= $count--;?></th>
                                     <td style="text-align:center"><a style="text-decoration:none; color:black" href="boardView.php?postseq=<?= $post["postseq"]?>&count=<?= $count+1?>"><?= $post["posttitle"];?></a></td>
-                                    <td style="text-align:center"><?= $nicknameList[$num++];?></td>
+                                    <td style="text-align:center"><?= $post["memnickname"];?></td>
                                     <td style="text-align:center"><?= $post["postviewcount"];?></td>
                                     <td style="text-align:center"><?= $post["posttime"];?></td>
                                 </tr>

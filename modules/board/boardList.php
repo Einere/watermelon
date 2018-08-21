@@ -9,6 +9,7 @@ $search_writer = '';
 $search_choice = '';
 if(isset($_GET['search_choice'])) {
     $search_choice = $_GET['search_choice'];
+    $search_text = $_GET['search_text'];
     if($_GET['search_choice'] == 'search_title') {
         $search_title = '%'.$_GET['search_text'].'%';
     } else if($_GET['search_choice'] == 'search_content') {
@@ -103,6 +104,7 @@ if(isset($_GET['search_choice'])){
                 $pagestart, $limit
             ";
 }
+
 $postList = mysqli_query($conn, $sql);
 $postList2 = mysqli_fetch_array($postList);
 
@@ -259,7 +261,7 @@ if(isset($_SESSION['id'])) {
             <?php
                 for($i=1; $i<=$total_page; $i++) {
                     if($i != $page) { ?>
-                        <a href="boardList.php?page=<?= $i ?>"><?= $i ?></a>
+                        <a href="boardList.php?page=<?= $i ?>&limit=<?=$limit?>&search_choice=<?= $search_choice?>&search_text=<?=$search_text?>"><?= $i ?></a>
                         <?php
                     } else {
                         echo '<strong>'.$i.'</strong>';

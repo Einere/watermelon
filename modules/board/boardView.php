@@ -14,11 +14,13 @@
     $result = mysqli_query($conn, $sql);
     $post = mysqli_fetch_array($result);
     $writeId = $post['memid'];
-    $postcount = ++$post['postviewcount'];
-    
-    //update view count
-    $sql = "UPDATE post SET postviewcount = $postcount WHERE postseq = $postseq";
-    mysqli_query($conn, $sql);
+    if(!isset($_GET['name'])) {
+        $postcount = ++$post['postviewcount'];
+        
+        //update view count
+        $sql = "UPDATE post SET postviewcount = $postcount WHERE postseq = $postseq";
+        mysqli_query($conn, $sql);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -103,7 +105,7 @@
             <div align="center">첨부파일</div>
         </td>
         <td style="font-family:돋음; font-size:12px;">
-            <a href="./boardupload/<%=board.getFile()%>">
+            <a href="./boardForm/<%=board.getFile()%>">
                 <?=$post['postfile'];?>
             </a>
         </td>
@@ -115,19 +117,49 @@
         <td colspan="2">&nbsp;</td>
     </tr>
     <tr align="center" valign="middle">
+        <form name = 'check_delete' method='post'>
         <td colspan="5">
             <?php if($writeId == $loginId) { ?>
-            <input type="button" value='[수정]' onclick="location.href='<?= "boardUpload.php?name=Modify&postseq=".$post['postseq']."&count=".$count; ?>'">
+            <input type="button" value='[수정]' onclick="location.href='<?= "boardForm.php?name=Modify&postseq=".$post['postseq']."&count=".$count; ?>'">
             &nbsp;&nbsp;
 
-            <input type="button" value='[삭제]' onclick="location.href='<?= "boardDelete.php?del=true_delete&postseq=".$post['postseq']; ?>'">
+            <input type="button" value='[진짜삭제]' onclick='mydelete(1)'>
             &nbsp;&nbsp;
+
+            <input type="button" value='[가짜삭제]' onclick="mydelete(2)">
+            &nbsp;&nbsp;
+
             <?php } ?>
             <input type="button" value='[목록]' onclick="location.href='<?= 'boardList.php'?>'">
              &nbsp;&nbsp;
         </td>
+        </form>
     </tr>
 </table>
+
+        <script>
+            function mydelete (index)
+            {
+                var postseq = <?= $postseq ?>;
+
+                // console.log(index);
+                //진짜삭제
+                var con_test = confirm("정말로 삭제 하시겠습니까?");
+                if(con_test == true){
+                    if(index==1)
+                    {
+                        document.check_delete.action="boardDelete.php?del=true_delete&postseq="+postseq;
+                    }
+                    else
+                    {
+                        document.check_delete.action="boardDelete.php?del=false_delete&postseq="+postseq;
+                    }
+                }
+                document.check_delete.submit();
+            };    
+        </script>
+
+
 </body>
 
 </html>

@@ -78,5 +78,6 @@
             </table>
             <input type='submit' value='<?= $pageTitle ?>' style="float:right; margin-top:10px; height:40px; width:80px">
         </form>
+        <input type='button' onclick="location.href='<?= 'boardList.php'?>'" value='back' style="float:right; margin-top:10px; height:40px; width:80px">
 </body>  
 </html>  

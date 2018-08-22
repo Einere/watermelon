@@ -326,11 +326,15 @@ if(isset($_SESSION['id'])) {
 
         <script>
             function limit_change() {
-                //var page = <?= $page ?>;
+                /*var page = <?= $page ?>;*/
                 var page = 1;
                 var sel = document.getElementById("list_count");
-                var val = sel.options[sel.selectedIndex].value;
-                location.href="boardList.php?page="+page+"&limit="+val;
+                var limit = sel.options[sel.selectedIndex].value;
+                //location.href="boardList.php?page="+page+"&limit="+val;
+                var text = document.getElementById("search_text").value;
+                var search_choice = "<?=$search_choice?>";
+
+                location.href="boardList.php?page="+page+"&limit="+limit+"&search_choice="+search_choice+"&search_text="+text;  
             }
         </script>
     </body>
